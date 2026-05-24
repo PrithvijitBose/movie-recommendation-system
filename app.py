@@ -4,7 +4,9 @@ import streamlit as st
 # =============================
 # CONFIG
 # =============================
-API_BASE = "https://movie-recommendation-system-dd69.onrender.com/docs" or "http://127.0.0.1:8000"
+api_key = st.secrets["TMDB_API_KEY"]
+backend_url = st.secrets["BACKEND_URL"]
+API_BASE = "https://movie-recommendation-system-dd69.onrender.com" or "http://127.0.0.1:8000"
 TMDB_IMG = "https://image.tmdb.org/t/p/w500"
 
 st.set_page_config(page_title="Movie Recommender", page_icon="🎬", layout="wide")
@@ -95,7 +97,7 @@ def poster_grid(cards, cols=6, key_prefix="grid"):
 
             with colset[c]:
                 if poster:
-                    st.image(poster, width = 120)
+                    st.image(poster, use_column_width=True)
                 else:
                     st.write("🖼️ No poster")
 
@@ -106,7 +108,6 @@ def poster_grid(cards, cols=6, key_prefix="grid"):
                 st.markdown(
                     f"<div class='movie-title'>{title}</div>", unsafe_allow_html=True
                 )
-                st.markdown("<br>", unsafe_allow_html=True)
 
 
 def to_cards_from_tfidf_items(tfidf_items):
@@ -310,7 +311,7 @@ elif st.session_state.view == "details":
     with left:
         st.markdown("<div class='card'>", unsafe_allow_html=True)
         if data.get("poster_url"):
-            st.image(data["poster_url"], width = 120)
+            st.image(data["poster_url"], use_column_width=True)
         else:
             st.write("🖼️ No poster")
         st.markdown("</div>", unsafe_allow_html=True)
@@ -333,7 +334,7 @@ elif st.session_state.view == "details":
 
     if data.get("backdrop_url"):
         st.markdown("#### Backdrop")
-        st.image(data["backdrop_url"], width = 120)
+        st.image(data["backdrop_url"], use_column_width=True)
 
     st.divider()
     st.markdown("### ✅ Recommendations")
